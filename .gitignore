@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+api/.env
+api/data.db
+node_modules/
+.next/
+web/.env.local
+.DS_Store
+Thumbs.db

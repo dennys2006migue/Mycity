@@ -1,9 +1,7 @@
-# app.py
 import os, json
 from typing import List, Literal, Optional
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 import httpx
@@ -16,7 +14,6 @@ import openai
 
 # ---------- Carga de variables ----------
 load_dotenv()
-
 ALLOWED_ORIGINS = [o.strip() for o in os.getenv("ALLOWED_ORIGINS", "*").split(",")]
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 TOMTOM_API_KEY = os.getenv("TOMTOM_API_KEY")
@@ -105,7 +102,6 @@ async def traffic(q: TrafficQuery):
         r.raise_for_status()
         data = r.json()
 
-    # respuesta directa + normalización mínima
     return {"provider": "tomtom", "data": data}
 
 # ---------- Contaminación: OpenWeather Air Pollution ----------
@@ -183,7 +179,6 @@ def gibs_tiles(
     layer: str = "MODIS_Terra_CorrectedReflectance_TrueColor",
     time: str = "2025-01-01",
 ):
-    # El frontend usará este template XYZ
     template = (
         f"https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/{layer}"
         f"/default/{time}/GoogleMapsCompatible/{{z}}/{{y}}/{{x}}.jpg"
